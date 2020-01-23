@@ -7,15 +7,15 @@ The edX Learner and Course Analytics and Visualization Pipeline is a R script pr
 * analyze overall performance and interaction measurements for a given course.
 
 ## Protocol
-A generalize protocol is available at Protocols.io, [edX Learner and Course Analytics and Visualization Pipeline, V.3](https://www.protocols.io/view/edx-learner-and-course-analytics-and-visualization-zckf2uw) [dx.doi.org/10.17504/protocols.io.zfhf3j6](dx.doi.org/10.17504/protocols.io.zfhf3j6).
+A generalize protocol is available at Protocols.io, [edX Learning Objective Transition Network Analytics and Visualization Workflow](), [V.1, dx.doi.org/....](). The protocol covers how to use data processing, analysis and visualizations scripts in the workflow. 
 
-The protocol covers how to use the scripts in this workflow
+The workflow documented in this repository, also use student event logs that were processed by scripts 0-4 from the [edX Learner and Course Analytics and Visualization Pipeline, V.3](https://github.com/cns-iu/edx-learnertrajectorynetpipeline/releases/tag/v0.3-alpha) release. The full protocol for the pipeline is found at [edX Learner and Course Analytics and Visualization Pipeline, V.3](https://www.protocols.io/view/edx-learner-and-course-analytics-and-visualization-zckf2uw) [dx.doi.org/10.17504/protocols.io.zfhf3j6](dx.doi.org/10.17504/protocols.io.zfhf3j6).
 
 ## Script Workflow Description
 
 
 ## Sample Data
-Sample data sets are provided in the **[Data](https://github.com/cns-iu/edx-learnertrajectorynetpipeline/tree/master/data)** directory, which were created by the processing and analysis scripts described above. A short index of these files is available to review at the Rmarkdown documentation site **[Sample Data Index](https://cns-iu.github.io/edx-learnertrajectorynetpipeline/index.html)**.
+Sample data sets are provided in the **[Data]()** directory, which were created by the processing and analysis scripts described above. A short index of these files is available to review at the Rmarkdown documentation site **[Sample Data Index]()**.
 
 
 ## Analysis and Visualization Documentation Notebooks
