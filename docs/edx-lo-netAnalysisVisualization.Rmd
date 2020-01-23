@@ -1,5 +1,5 @@
 ---
-title: "edX Learning Objective Transition Network Analysis and Visualization"
+title: "edX Learning Objective Transition Network and HCPC Analysis and Visualization"
 author: "Michael Ginda"
 date: "January 23, 2020"
 output: html_document
