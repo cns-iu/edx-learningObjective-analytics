@@ -15,7 +15,7 @@ The workflow documented in this repository, also use student event logs that wer
 
 
 ## Sample Data
-Sample data sets are provided in the **[Data]()** directory, which were created by the processing and analysis scripts described above. A short index of these files is available to review at the Rmarkdown documentation site **[Sample Data Index]()**.
+Sample data sets are provided in the **[Data]()** directory, which were created by the processing and analysis scripts described above. A short index of these files is available to review at the Rmarkdown documentation site **[Sample Data Index](https://cns-iu.github.io/edx-learningObjective-trajectorynetwork/docs/index.html)**.
 
 
 ## Analysis and Visualization Documentation Notebooks
