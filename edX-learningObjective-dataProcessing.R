@@ -17,48 +17,49 @@
 # Authors:      Michael Ginda
 # Affiliation:  Indiana University
 # 
-# Description: This R data processing scripts translates learner grade performance and 
-#              interaction data (event logs) generated while engaging with an edX course's
-#              modules into learning objective analysis based on learning objective analysis
-#              of edX course subsection content modules (e.g. sequential modules).
-#              engagement level analysis edX course data for learners
+# Description: This R data processing script takes a learning objective analysis
+#              of an edx course structure to student grade performance and 
+#              interaction data (event logs) to create student analytics 
+#              based on course learning objectives (grades and dwell times), and 
+#              student learning objective transition networkss.
 #
 # File input stack: 
-#            1) A processed edX Course structure and content module list:
-#               - {org}+{course}+{term}-module-lookup.csv;
-#               - extracted by script, edX-0-courseStructureMeta.R;
-#            2) A list of student userIDs from an edX course:
-#               - {org}-{course}-{term}-auth_user-students.csv;
-#               - extracted by script, edX-1-studentUserList.R;
-#            3) A "studentevents" directory containing one or more student
-#               CSV event log file(s):
-#               - {userID}.csv;
-#               - extracted by script, edX-2-eventLogExtractor.R
+#            1) A processed edX course structure with appended 
+#               learning objective analysis:
+#               - course structure, results of the edX Learner and Course Analytics 
+#                 and Visualization Pipeline script edX-1-courseStructureMeta.R;
+#               - see sample dataB.csv
+#            2) A list of student userIDs and final course grades from an edX course:
+#               - data come from course edX Data Package certificates.csv data set'
+#               - see sample dataC.csv
+#            3) A "studentevents_processed" directory containing one or more processed student 
+#               event log CSV file(s):
+#               - data is processing results of the edX Learner and Course Analytics 
+#                 and Visualization Pipeline scripts edX-3-eventLogExtractor.R &
+#                 edX-4-eventLogFormatter.R
+#            4) A collection of student's edx course subsection grades.
+#               - data come from course edX Data Package grades_persistentsubsectiongrade.csv
+#               - see sample dataD.csv
 #
 # Output files:                        
-#            1) A set of processed data tables of event action logs for each student:
-#               - {userID}.csv;
-#               - Used in scripts:
-#                 * edX-4-learnerTrajectoryNet.R
-#            2) A list capturing student userIDs who are active in the course,
-#				        and have usable actions:
-#               - {org}-{course}-{term}-auth_user-students-active.csv;
-#               - Used in scripts:
-#                 * edX-4-learnerTrajectoryNet.R;
-#            3) A list capturing student userIDs who are active in the course,
-#				        but have no usable actions:
-#               - {org}-{course}-{term}-auth_user-students-unusableActivity.csv;
-#            4) A list capturing student userIDs who are inactive in the course,
-#				        and have no actions in their event logs:
-#               - {org}-{course}-{term}-auth_user-students-inactive.csv; 
+#            1) A data table of learning object grade calculations for each student:
+#               - {org}-{course}-{term}-learningObjectve_grades.csv;
+#               - see sample dataE.csv
+#            2) A data table of learning object dwell time calculations for each student:
+#               - {org}-{course}-{term}-learningObjectve_dwellTimes.csv;
+#               - see sample dataF.csv
+#            3) Learning objective transitions network edge lists for each student,
+#               - {org}-{course}-{term}-learningObjectve_edges.csv;
+#               - see sample dataG.csv
 #
-# Package dependencies: magrittr, stringr, plyr, tcltk reshape2
+# Package dependencies: tclick, tidyr, plyr, tcltk reshape2, igraph
 #
 # Change log:
 # 05.2019 - Initial code creating learning objective grade and time analysis &
 #           box-plot and parallel coordinate chart visualiations.
 # 12.2019 - Updated script to clarify data sets used; re-order arguments for consistency; 
-#           clarified inline documentation; 
+#           clarified inline documentation;
+# 01.2019 - Update script header, paths, data load, exported file names
 #
 ## ====================================================================================== ##
 
@@ -66,21 +67,28 @@
 rm(list=ls()) 
 
 # Load required packages
-library(tidyr)      # for data preparation
-#library(stringr)    # for string manipulation
+library(tcltk)      # for setting paths
+library(tidyr)      # for tidy data and piping
 library(plyr)       # for data aggregations
 library(dplyr)      # for filtering
 library(reshape2)   # for data reshaping
 library(igraph)     # for creating an adjacency matrix
 
-#library(gplots)     # for heatmap visualization - heatmap.2 function
-
 #### Paths #### 
 # Generic Set up
-# Assigns a path to directory with original edX course data files used in data processing
-path_data = tclvalue(tkchooseDirectory())
-#Assigns a path to open prior script outputs and to save new processing output files.
-path_output = tclvalue(tkchooseDirectory())
+#Checks if a user has previously assign a path with a prior script 
+#If false, lets user assign path to directory to read in a course'
+#data from the edX data package
+if(exists("path_data")==FALSE){
+  path_data = tclvalue(tkchooseDirectory())
+}
+
+#Checks if a user has previously assign a path with a prior script 
+#If false, lets user assign path to previous processing output files of an
+#edX course using the a previous processing scripts from this pipeline.
+if(exists("path_output")==FALSE){
+  path_output = tclvalue(tkchooseDirectory())
+}
 
 #### Load Data ####
 # Course Module Learning Objective Analysis Results
@@ -91,24 +99,27 @@ lo <- read.csv(file=list.files(full.names = TRUE, recursive = FALSE,
 # Student course subsection grades - measured at the sequencial group level of course structure
 subGrades <- read.csv(file=list.files(full.names = TRUE, recursive = FALSE, 
                                       path = paste0(path_data,"/state/"),
-                                      pattern = "grades_persistentsubsectiongrade.csv$"), header=T)[c(2:7)]
+                                      pattern = "grades_persistentsubsectiongrade.csv$"), header=T)[c(1:7)]
 
 # Create paths to student logs data
 # Load list of users to create list of log file paths
-users <- read.csv(list.files(full.names = TRUE, recursive = FALSE, 
-                             path = paste0(path_output,"/userlists/"),
-                             pattern = "-auth_user-students-pass.csv$"),header=T)
+users <- read.csv(list.files(full.names = TRUE, recursive = FALSE,
+                             path = paste0(path_data,"/state/"),
+                             pattern = "certificates.csv$"),header=T)[c(2,4)]
 
-names(users) <- "id"
-filePaths <- paste0(path_output,"/studentevents_processed/",users$id,".csv")
+# Event log file paths
+filePaths <- paste0(path_output,"/studentevents_processed/",users$user_id,".csv")
 
 #### Data Processing ####
 # Save the time (to compute elapsed time of script)
 start <-  proc.time() 
 
+# Course Identifier for exported files
+course_id <- gsub("\\/","\\-",subGrades[1,]$course_id)
+
 ### Preparing Learning Objectives Data
 # Reshape Learning Objective matrix to a list, NAs removed from data set (hidden modules or instructions for course)
-lo <- lo %>% reshape2::melt(id.vars=c(1:13),variable.name="objective",na.rm=T)
+lo <- lo %>% melt(id.vars=c(1:13),variable.name="objective",na.rm=T)
 # Updates objective factors
 lo$objective <-  gsub("\\.", " ",lo$objective)
 
@@ -134,22 +145,22 @@ subGrades <- subGrades[,c("usage_key","earned_graded","possible_graded","user_id
   mutate(mod_id = stringr::str_split_fixed(usage_key, "\\@", 3)[,3])
 
 # Some sequential modules are removed if they are not mapped to learning objectives (e.g. prequestionnaires, hidden content, etc.)
-grades <- join(subGrades[,c("mod_id","earned_graded","possible_graded","user_id")],
+grade <- join(subGrades[,c("mod_id","earned_graded","possible_graded","user_id")],
                lo_s[,c("mod_id","objective")],by="mod_id",type = "left") %>% 
-  na.exclude() %>%  
-  ddply(.,~ objective+user_id, summarise,
-        earned_points = sum(earned_graded),
-        possible_points = sum(possible_graded),
-        per_earned = sum(earned_graded)/sum(possible_graded))
-grades <- grades[grades$user_id %in% users$id,]
-rm(lo_s,subGrades)
+          na.exclude() %>%  
+          ddply(.,~ objective+user_id, summarise,
+                earned_points = sum(earned_graded),
+                possible_points = sum(possible_graded),
+                per_earned = sum(earned_graded)/sum(possible_graded))
+grade <- grade[grade$user_id %in% users$user_id,]
 
 #### Learning Objective Dwell Times ####
+#Create a shell data.frame
 dwell  <- data.frame(objective=as.character(),                     # Learning Objective
                      dwell=as.numeric(),                           # Dwell Time (Min)
                      events=as.numeric(),                          # Event Count
-                     created=as.POSIXct(as.character()),  # First Event Log Created
-                     modified=as.POSIXct(as.character()), # Last Modification to Event Log
+                     created=as.POSIXct(as.character()),           # First Event Log Created
+                     modified=as.POSIXct(as.character()),          # Last Modification to Event Log
                      user_id=as.integer(),                         # Student Identifier
                      stringsAsFactors=FALSE)
 
@@ -158,7 +169,7 @@ dwell  <- data.frame(objective=as.character(),                     # Learning Ob
 # on the same objective for a period of time.
 selfLoopKeep <- T 
 
-# Learning Objective Edge List for Adjacency Network
+# Learning Objective Edge List for Adjacency Network Data Fame
 edges <- data.frame(user_id=as.integer(),                          # Student Identifier
                     from=as.character(),                           # Learning Objective - Source
                     f.mod_id=as.character(),                       # Content Module - Source
@@ -172,7 +183,7 @@ edges <- data.frame(user_id=as.integer(),                          # Student Ide
 for(i in 1:length(filePaths)){
   message("Processing log file ", i, " of ", length(filePaths))
   print(proc.time() - start)
-  ## Load data set
+  # Load data set
   data <- read.csv(filePaths[i])[,c("course_id","user_id","mod_hex_id","time","period",
                                     "attempts","grade","max_grade","success")]
   # Renames field to join with Learning Objectives 
@@ -233,13 +244,14 @@ for(i in 1:length(filePaths)){
   edges <- rbind(edges,tmp)
 }
 
-#Clearn up environment
-rm(i,tmp,data,selfLoopKeep,filePaths,users)
+## Save Data Processing and Analytic Results Output
+write.csv(grade, file=paste0(path_output,"/learningObjectives/",course_id,"-learningObjective_grades.csv"),row.names = F)
+write.csv(dwell, file=paste0(path_output,"/learningObjectives/",course_id,"-learningObjective_dwelltimes.csv"),row.names = F)
+write.csv(edges[,c(1,2,4,6)], file=paste0(path_output,"/learningObjectives",course_id,"-learningObjective_edges.csv"),row.names = F)
 
-## Analysis Results Output
-write.csv(grades, file=paste0(path_output,"/grade.csv"),row.names = F)
-write.csv(dwell, file=paste0(path_output,"/dwell.csv"),row.names = F)
-write.csv(edges[,c(1,2,4,6)], file=paste0(path_output,"/edges.csv"),row.names = F)
+# Clean up environment
+rm(i,tmp,data,lo_c,lo_id,lo_s,course_id,filePaths,selfLoopKeep)
+rm(lo,users,grade,subGrades,dwell,edges)
 
 #### Finishing Details ####
 #Indicate completion
