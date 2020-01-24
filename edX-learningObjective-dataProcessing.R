@@ -151,7 +151,7 @@ grade <- join(subGrades[,c("mod_id","earned_graded","possible_graded","user_id")
           ddply(.,~ objective+user_id, summarise,
                 earned_points = sum(earned_graded),
                 possible_points = sum(possible_graded),
-                per_earned = sum(earned_graded)/sum(possible_graded))
+                per_earned =round(sum(earned_graded,na.rm=T)/sum(possible_graded,na.rm=T)*100,3))
 grade <- grade[grade$user_id %in% users$user_id,]
 
 #### Learning Objective Dwell Times ####
@@ -247,7 +247,7 @@ for(i in 1:length(filePaths)){
 ## Save Data Processing and Analytic Results Output
 write.csv(grade, file=paste0(path_output,"/learningObjectives/",course_id,"-learningObjective_grades.csv"),row.names = F)
 write.csv(dwell, file=paste0(path_output,"/learningObjectives/",course_id,"-learningObjective_dwelltimes.csv"),row.names = F)
-write.csv(edges[,c(1,2,4,6)], file=paste0(path_output,"/learningObjectives",course_id,"-learningObjective_edges.csv"),row.names = F)
+write.csv(edges[,c(1,2,4,6)], file=paste0(path_output,"/learningObjectives/",course_id,"-learningObjective_edges.csv"),row.names = F)
 
 # Clean up environment
 rm(i,tmp,data,lo_c,lo_id,lo_s,course_id,filePaths,selfLoopKeep)

@@ -41,5 +41,4 @@ vignettes/*.pdf
 packrat/lib*/
 data-work
 edX-learningObjective-1-gradeTimeAnalysis-sci-networkVis.R
-edX-learningObjective-1-gradeTimeAnalysis-sci-boxplots.R
 edX-learningObjective-1-hcluster2-sci.R
