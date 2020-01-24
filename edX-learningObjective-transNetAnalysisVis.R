@@ -75,6 +75,16 @@ library(ggplot2)    # for visualization
 library(viridis)    # for color scales
 library(gridExtra)  # for arranging figures
 
+#Load data sets 
+#Dwell, grade, edges
+
+
+
+
+
+
+
+
 #### Grade, Dwell Time and Edge Data Analysis 
 grade_s <- dwell_s <- data.frame()
 

@@ -17,7 +17,7 @@
 # Authors:      Michael Ginda
 # Affiliation:  Indiana University
 # 
-# Description: This R data processing scripts translates learner grade performance and 
+# Description: This R scripts translates learner grade performance and 
 #              interaction data (event logs) generated while engaging with an edX course's
 #              modules into learning objective analysis based on learning objective analysis
 #              of edX course subsection content modules (e.g. sequential modules).
