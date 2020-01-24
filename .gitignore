@@ -39,4 +39,4 @@ vignettes/*.pdf
 .Renviron
 .Rproj.user
 packrat/lib*/
-data
+data-work
