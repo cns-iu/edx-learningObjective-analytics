@@ -1,10 +1,5 @@
 # edX Learning Objective Transition Network Analysis and Visualization - R Scripts
-The edX Learner and Course Analytics and Visualization Pipeline is a R script processing pipeline used to with course and student level data from an edX course database or edX Data Package. The pipeline was designed to:
-
-* extract and process course structures, learners’ event logs, demographic and performance data;
-* create learner trajectory networks (see [Visualizations of learning trajectories in online courses (cns-iu/learning-trajectories)](https://github.com/cns-iu/learning-trajectories) for example visualization implementation);
-* analyze the learner use of course content modules; and
-* analyze overall performance and interaction measurements for a given course.
+The edX Learning Objective Visual Analytics Pipeline is a R script processing pipeline used to analyze edX course and student level data in the context of learing objectives identified by instructional designer. The scripts leverage edX Data Package data sets and a learning objective analysis matrix. 
 
 ## Protocol
 A generalize protocol is available at Protocols.io, [edX Learning Objective Transition Network Analytics and Visualization Workflow, V.1](), [dx.doi.org/....](). The protocol covers how to use data processing, analysis and visualizations scripts in the workflow. 
