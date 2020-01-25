@@ -1,8 +1,8 @@
-# edX Learning Objective Visual Analytics
+# edX Learning Objective Visual Analytics Workflow
 The edX Learning Objective Visual Analytics R Scripts is a processing pipeline used to analyze edX course and student level data in the context of learing objectives identified by instructional designer. The scripts leverage edX Data Package data sets and a learning objective analysis matrix. 
 
 ## Protocol
-A generalize protocol is available at Protocols.io, [edX Learning Objective Transition Network Analytics and Visualization Workflow, V.1](), [dx.doi.org/....](). The protocol covers how to use data processing, analysis and visualizations scripts in the workflow. 
+A generalize protocol is available at Protocols.io, [edX Learning Objective Visual Analytics Workflow, V.1](), [dx.doi.org/....](). The protocol covers how to use data processing, analysis and visualizations scripts in the workflow. 
 
 The workflow documented in this repository, also use student event logs that were processed by scripts 0-4 from the [edX Learner and Course Analytics and Visualization Pipeline, V.3](https://github.com/cns-iu/edx-learnertrajectorynetpipeline/releases/tag/v0.3-alpha) release. The full protocol for the pipeline is found at [edX Learner and Course Analytics and Visualization Pipeline, V.3](https://www.protocols.io/view/edx-learner-and-course-analytics-and-visualization-zckf2uw) [dx.doi.org/10.17504/protocols.io.zfhf3j6](dx.doi.org/10.17504/protocols.io.zfhf3j6).
 
