@@ -37,8 +37,14 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.RProfile
 .Rproj.user
 packrat/lib*/
+
+# User directories and files
+envirosetup.R
+anonymizer.R
 data-work
-edX-learningObjective-1-gradeTimeAnalysis-sci-networkVis.R
-edX-learningObjective-1-hcluster2-sci.R
+figures
+dataG
+dataE
