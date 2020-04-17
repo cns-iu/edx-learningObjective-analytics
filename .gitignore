@@ -37,7 +37,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-.RProfile
+.Rprofile
 .Rproj.user
 packrat/lib*/
 
