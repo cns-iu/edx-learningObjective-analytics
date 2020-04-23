@@ -148,7 +148,7 @@ course_id <- gsub("\\/","\\-",lo[1,]$courseID)
 
 ### Preparing Learning Objectives Data
 # Reshape Learning Objective matrix to a list, NAs removed from data set (hidden modules or instructions for course)
-lo <- lo %>% melt(id.vars=c(1:13),variable.name="objective",na.rm=T)
+lo <- lo %>% melt(id.vars=c(1:11),variable.name="objective",na.rm=T)
 # Updates objective factors
 lo$objective <- sub("[.]{1}", " ", lo$objective)
 

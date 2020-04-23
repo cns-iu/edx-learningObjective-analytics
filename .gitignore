@@ -42,9 +42,15 @@ vignettes/*.pdf
 packrat/lib*/
 
 # User directories and files
+analysis
+course
+learningObjectives
+scratchpad.R
+state
+studentevents_processed
+userlists
 envirosetup.R
 anonymizer.R
-data-work
 figures
 docs
 dataG
