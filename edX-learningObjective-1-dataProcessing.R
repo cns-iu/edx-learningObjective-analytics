@@ -1,6 +1,6 @@
 ## ====================================================================================== ##
 # Title:    Associating edX Learner Performance and Interactions to Learning Objectives
-# Project:  edX Learner Objective Grade and Activity Visual Analytics
+# Project:  edX Learning Objective Visual Analytics
 #
 #     Copyright 2019-2020 Michael Ginda
 #     Licensed under the Apache License, Version 2.0 (the "License");

@@ -40,6 +40,7 @@ vignettes/*.pdf
 .Rprofile
 .Rproj.user
 packrat/lib*/
+*.Rproj
 
 # User directories and files
 analysis
