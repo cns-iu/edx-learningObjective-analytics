@@ -1,6 +1,6 @@
 ## ====================================================================================== ##
 # Title:   edX Chapter module to Learning Objective Bipartite Network 
-# Project: edX Learning Objective Visual Analytics
+# Project: edX Learning Objective Visual Analytics Workflow
 # 
 #     Copyright 2020 Michael Ginda
 #

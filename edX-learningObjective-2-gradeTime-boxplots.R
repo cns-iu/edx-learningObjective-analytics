@@ -1,7 +1,7 @@
 ## ====================================================================================== ##
 # Title:   Visualization of student performance and activity across learning objective
 #          for edX courses
-# Project: edX Learning Objective Visual Analytics
+# Project: edX Learning Objective Visual Analytics Workflow
 # 
 #     Copyright 2019-2020 Michael Ginda
 #

@@ -1,6 +1,6 @@
 ## ====================================================================================== ##
 # Title:    Associating edX Learner Performance and Interactions to Learning Objectives
-# Project:  edX Learning Objective Visual Analytics
+# Project:  edX Learning Objective Visual Analytics WOrkflow
 #
 #     Copyright 2019-2020 Michael Ginda
 #     Licensed under the Apache License, Version 2.0 (the "License");
