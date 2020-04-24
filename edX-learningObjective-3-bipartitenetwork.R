@@ -20,8 +20,10 @@
 # Affiliation:  Indiana University
 # 
 # Description: This R script creates a bipartite network between chapter modules and 
-#              learning objective modules for an edX course, specifically, a node and
-#              edge list that may be used in secondary analytics tools, like Gephi.
+#              learning objective for an edX course, specifically, a node and
+#              edge list that may be used in secondary analytics tools, such as Gephi.
+#              The script also exports a color palette set of web color hexadecimal 
+#              codes used in the final visualization of this network.
 #
 # File input stack: 
 #            1) A processed edX Course structure and content module list
