@@ -21,9 +21,9 @@
 # Description: This R script associates student grade performance data and 
 #              processed student content interactions (event logs) with learning  
 #              objectives that were coded to an edx courses' organizational and 
-#              content structure to create student analytics of student interaction 
-#              (dwell times & event counts) and grade performance towards a course's
-#              learning objectives.
+#              content structure to analyze student interaction (dwell times & 
+#              event counts) and grade performance towards a course's learning
+#              objectives.
 #
 # File input stack: 
 #            1) A processed edX Course structure and content module list
