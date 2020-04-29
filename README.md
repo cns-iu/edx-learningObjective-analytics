@@ -1,5 +1,5 @@
 # edX Learning Objective Visual Analytics Workflow
-The edX Learning Objective Visual Analytics R Scripts is a processing pipeline used to analyze edX course and student level data in the context of learing objectives identified by instructional designer. The scripts leverage course level data provided in an edX Data Package archive, and a learning objective analysis of an edX course structure.
+The edX Learning Objective Visual Analytics R Scripts is a processing pipeline used to analyze edX course and student level data in the context of learning objectives identified by instructional designer. The scripts leverage course level data provided in an edX Data Package archive, and a learning objective analysis of an edX course structure.
 
 ## Related Publications and Protocol
 Analysis and visualization results are described in the publication:
